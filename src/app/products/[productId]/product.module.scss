@@ -1,0 +1,30 @@
+.product {
+	display: flex;
+	justify-content: space-between;
+	.item {
+		width: 48%;
+		.productDetails {
+			display: flex;
+			flex-direction: column;
+			h1 {
+				font-size: 2.25rem;
+				font-weight: normal;
+			}
+			p {
+				margin-top: 1rem;
+			}
+			.productPrice {
+				display: flex;
+				gap: 1rem;
+				h3 {
+					text-decoration: line-through;
+					opacity: 0.5;
+				}
+			}
+			.productInfo {
+				display: flex;
+				flex-direction: column;
+			}
+		}
+	}
+}

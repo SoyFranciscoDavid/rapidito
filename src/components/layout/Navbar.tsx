@@ -28,6 +28,7 @@ export default function Navbar() {
   const DARK_HERO_ROUTES = [
     "/",
     "/products",
+    "/cart",
     "/nosotros",
     "/contacto",
     "/ofertas",

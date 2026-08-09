@@ -4,7 +4,7 @@ import type { Product } from "@/types/product.types";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Productos | Rapidito - FastFood",
+  title: "Productos | Rapidito",
   description:
     "Explora todos nuestros productos: hamburguesas, pizzas, empanadas, tacos y más. Comida rápida de calidad.",
 };

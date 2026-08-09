@@ -1,11 +1,36 @@
-import { configureStore } from "@reduxjs/toolkit";
-import cartReducer from "./cart/cartSlice";
+import { configureStore, type Middleware } from "@reduxjs/toolkit";
+import cartReducer, { CART_STORAGE_KEY } from "./cart/cartSlice";
+
+/**
+ * Persiste el carrito en localStorage cada vez que cambia.
+ * Solo corre en el cliente (typeof window !== "undefined"),
+ * así no rompe el SSR / build de Vercel.
+ */
+const cartPersistenceMiddleware: Middleware =
+  (storeAPI) => (next) => (action) => {
+    const result = next(action);
+
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem(
+          CART_STORAGE_KEY,
+          JSON.stringify(storeAPI.getState().cart.items),
+        );
+      } catch {
+        // localStorage no disponible (modo privado, etc.): ignorar
+      }
+    }
+
+    return result;
+  };
 
 export const makeStore = () =>
   configureStore({
     reducer: {
       cart: cartReducer,
     },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(cartPersistenceMiddleware),
   });
 
 type Store = ReturnType<typeof makeStore>;

@@ -2,6 +2,9 @@ import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
 import type { CartItem } from "@/types/product.types";
 import type { RootState } from "../store";
 
+/** Clave usada para persistir el carrito en localStorage */
+export const CART_STORAGE_KEY = "rapidito-cart";
+
 interface CartState {
   items: CartItem[];
 }
@@ -45,6 +48,10 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.items = [];
     },
+    /** Restaura el carrito guardado en localStorage (cliente) */
+    hydrateCart: (state, action: PayloadAction<CartItem[]>) => {
+      state.items = action.payload;
+    },
   },
 });
 
@@ -66,6 +73,7 @@ export const {
   incrementQuantity,
   decrementQuantity,
   clearCart,
+  hydrateCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

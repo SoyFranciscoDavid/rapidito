@@ -3,7 +3,7 @@ import Link from "next/link";
 import { BiMap, BiPhone, BiEnvelope, BiTime } from "react-icons/bi";
 
 export const metadata: Metadata = {
-  title: "Contacto | Rapidito - FastFood",
+  title: "Contacto | Rapidito",
   description:
     "Ponte en contacto con nosotros. Estamos ubicados en Willowbrook, CA. Llámanos, escríbenos o visítanos.",
 };

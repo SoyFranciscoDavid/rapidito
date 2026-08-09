@@ -41,7 +41,7 @@ export default function IconNav({ variant = "dark" }: IconNavProps) {
       </button>
 
       {openUser && (
-        <div className="absolute top-16 -left-2 flex flex-col gap-4 bg-white shadow-hard p-4 rounded-md z-50 animate-fade-in">
+        <div className="absolute top-16 -left-2 flex flex-col gap-4 bg-white text-foreground shadow-hard p-4 rounded-md z-50 animate-fade-in">
           <Link
             href="/"
             className="hover:text-primary transition-colors text-sm"

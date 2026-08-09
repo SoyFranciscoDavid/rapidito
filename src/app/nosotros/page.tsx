@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Nosotros | Rapidito - FastFood",
+  title: "Nosotros | Rapidito",
   description:
     "Conoce nuestra historia, misión y valores. Rapidito nació para ofrecer la mejor comida rápida con ingredientes de calidad.",
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/features/hooks";
 import {
   selectCartItems,
@@ -23,14 +24,14 @@ export default function CartModal({ onClose }: CartModalProps) {
 
   if (items.length === 0) {
     return (
-      <div className="absolute top-full right-0 mt-2 w-72 bg-white rounded-lg shadow-hard p-4 z-50 animate-fade-in">
+      <div className="absolute top-full right-0 mt-2 w-72 bg-white text-foreground rounded-lg shadow-hard p-4 z-50 animate-fade-in">
         <p className="text-center text-text-muted py-4">Carrito vacío</p>
       </div>
     );
   }
 
   return (
-    <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-lg shadow-hard p-4 z-50 animate-fade-in">
+    <div className="absolute top-full right-0 mt-2 w-80 bg-white text-foreground rounded-lg shadow-hard p-4 z-50 animate-fade-in">
       <h3 className="font-semibold text-base mb-3">Carrito de Compras</h3>
 
       <div className="max-h-64 overflow-y-auto">
@@ -90,12 +91,20 @@ export default function CartModal({ onClose }: CartModalProps) {
           Envío y descuentos calculados al finalizar.
         </p>
         <div className="flex justify-between gap-2">
-          <button className="flex-1 px-3 py-2.5 border border-border rounded-md text-sm cursor-pointer hover:bg-gray-50 transition-colors">
+          <Link
+            href="/cart"
+            onClick={onClose}
+            className="flex-1 px-3 py-2.5 border border-border rounded-md text-sm text-center cursor-pointer hover:bg-gray-50 transition-colors"
+          >
             Ver Carrito
-          </button>
-          <button className="flex-1 px-3 py-2.5 bg-gray-900 text-white rounded-md text-sm cursor-pointer hover:bg-gray-800 transition-colors">
+          </Link>
+          <Link
+            href="/cart"
+            onClick={onClose}
+            className="flex-1 px-3 py-2.5 bg-gray-900 text-white rounded-md text-sm text-center cursor-pointer hover:bg-gray-800 transition-colors"
+          >
             Finalizar compra
-          </button>
+          </Link>
         </div>
       </div>
     </div>

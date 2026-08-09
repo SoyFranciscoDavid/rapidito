@@ -7,7 +7,7 @@ import Badge from "@/components/ui/Badge";
 import { formatPrice } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Ofertas | Rapidito - FastFood",
+  title: "Ofertas | Rapidito",
   description:
     "Aprovecha nuestras ofertas y promociones especiales en hamburguesas, pizzas, empanadas y más. ¡Los mejores precios en comida rápida!",
 };

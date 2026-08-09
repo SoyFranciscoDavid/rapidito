@@ -18,7 +18,7 @@ const playfair = Playfair_Display_SC({
 });
 
 export const metadata: Metadata = {
-  title: "Rapidito - FastFood",
+  title: "Rapidito",
   description: "La app de comidas rápidas más completa",
   icons: {
     icon: "/favicon.svg",

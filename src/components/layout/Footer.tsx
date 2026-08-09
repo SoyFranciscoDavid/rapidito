@@ -152,7 +152,7 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="w-full mt-12 mb-16 flex justify-between opacity-60 font-semibold text-sm">
-        <p>© 2024 {SITE_NAME} - FastFood</p>
+        <p>© 2024 {SITE_NAME}</p>
         <div className="flex gap-3">
           <span>Moneda</span>
           <span>$ USD</span>

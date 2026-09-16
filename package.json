@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
     "reset": "rimraf .next && next dev",
     "dev:clean": "rimraf .next && next dev"
   },
@@ -14,12 +15,14 @@
     "@reduxjs/toolkit": "^2.2.6",
     "@tailwindcss/postcss": "^4.3.3",
     "clsx": "^2.1.1",
+    "gsap": "^3.15.0",
     "next": "14.2.4",
     "postcss": "^8.5.23",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
     "react-redux": "^9.1.2",
+    "sharp": "^0.35.4",
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.3.3"
   },

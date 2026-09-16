@@ -9,6 +9,7 @@ import {
   incrementQuantity,
   decrementQuantity,
   removeItem,
+  getCartItemKey,
 } from "@/features/cart/cartSlice";
 import { formatPrice } from "@/lib/utils";
 import { BiTrash } from "react-icons/bi";
@@ -37,7 +38,7 @@ export default function CartModal({ onClose }: CartModalProps) {
       <div className="max-h-64 overflow-y-auto">
         {items.map((item) => (
           <div
-            key={item.id}
+            key={getCartItemKey(item)}
             className="flex gap-3 mb-4 pb-4 border-b border-border last:border-0"
           >
             <Image
@@ -53,17 +54,26 @@ export default function CartModal({ onClose }: CartModalProps) {
                 <span>{formatPrice(item.price)}</span>
               </div>
               <span className="text-xs text-text-muted">Disponible</span>
+              {item.sauces && item.sauces.length > 0 && (
+                <span className="text-xs text-text-muted">
+                  Aderezos: {item.sauces.join(", ")}
+                </span>
+              )}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => dispatch(decrementQuantity(item.id))}
+                    type="button"
+                    aria-label={`Disminuir cantidad de ${item.name}`}
+                    onClick={() => dispatch(decrementQuantity(item))}
                     className="font-bold cursor-pointer text-base"
                   >
                     -
                   </button>
                   <span className="font-semibold text-sm">{item.quantity}</span>
                   <button
-                    onClick={() => dispatch(incrementQuantity(item.id))}
+                    type="button"
+                    aria-label={`Aumentar cantidad de ${item.name}`}
+                    onClick={() => dispatch(incrementQuantity(item))}
                     disabled={item.quantity >= item.stock}
                     className="font-semibold cursor-pointer text-sm disabled:opacity-20 disabled:cursor-not-allowed"
                   >
@@ -71,7 +81,9 @@ export default function CartModal({ onClose }: CartModalProps) {
                   </button>
                 </div>
                 <button
-                  onClick={() => dispatch(removeItem(item.id))}
+                  type="button"
+                  aria-label={`Eliminar ${item.name}`}
+                  onClick={() => dispatch(removeItem(item))}
                   className="text-red-500 cursor-pointer flex items-center gap-1 text-sm"
                 >
                   <BiTrash />

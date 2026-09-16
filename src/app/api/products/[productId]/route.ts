@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import products from "../../products.json";
+import { getProductById } from "@/lib/products";
 
 export async function GET(
   request: Request,
   { params }: { params: { productId: string } },
 ) {
-  const product = products.find((p) => params.productId === p.id);
+  const product = getProductById(params.productId);
   if (!product) {
     return NextResponse.json(
       { error: "Producto no encontrado" },

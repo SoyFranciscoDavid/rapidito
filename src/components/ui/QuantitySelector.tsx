@@ -23,6 +23,8 @@ export default function QuantitySelector({
       )}
     >
       <button
+        type="button"
+        aria-label="Disminuir cantidad"
         onClick={onDecrement}
         disabled={disabled}
         className="w-10 h-10 text-center cursor-pointer text-lg font-medium disabled:opacity-20 disabled:cursor-not-allowed"
@@ -31,6 +33,8 @@ export default function QuantitySelector({
       </button>
       <span className="font-semibold">{quantity}</span>
       <button
+        type="button"
+        aria-label="Aumentar cantidad"
         onClick={onIncrement}
         disabled={disabled}
         className="w-10 h-10 text-center cursor-pointer text-lg font-medium disabled:opacity-20 disabled:cursor-not-allowed"

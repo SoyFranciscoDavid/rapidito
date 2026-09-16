@@ -1,15 +1,12 @@
 import ProductGrid from "@/components/product/ProductGrid";
-import products from "@/app/api/products.json";
-import type { Product } from "@/types/product.types";
+import { searchProducts } from "@/lib/products";
 
 export default async function SearchPage({
   params: { query },
 }: {
   params: { query: string };
 }) {
-  const typed = products as Product[];
-  const search = query.toLowerCase();
-  const filtered = typed.filter((p) => p.name.toLowerCase().includes(search));
+  const filtered = searchProducts(query);
 
   return (
     <main className="container-app pt-24 pb-8">

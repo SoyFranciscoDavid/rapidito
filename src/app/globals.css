@@ -12,13 +12,14 @@
   --color-secondary-hover: #ef4444;
   --color-accent: #a16207;
   --color-accent-hover: #92400e;
-  --color-background: #fef2f2;
+  --color-background: #fffffe;
   --color-foreground: #450a0a;
+  --color-black: #0a0a0a;
   --color-surface: #ffffff;
   --color-surface-alt: #fff1f2;
   --color-muted: #f0edf1;
   --color-muted-foreground: #64748b;
-  --color-text: #450a0a;
+  --color-text: #272930;
   --color-text-muted: #64748b;
   --color-border: #fecaca;
   --color-contrast: #c2410c;
@@ -27,8 +28,8 @@
   --color-ring: #dc2626;
 
   /* Typography - Restaurant Menu (UI Pro Max) */
-  --font-sans: "Karla", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Playfair Display SC", serif;
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-oswald), sans-serif;
 
   /* Spacing scale */
   --spacing-xs: 0.25rem;
@@ -104,6 +105,178 @@
 }
 
 /* ========================================
+   HERO MASK SLIDER
+   Slider de imágenes con forma de texto "rapidito"
+   ======================================== */
+
+/* Animación del track: desplaza las imágenes de izquierda a derecha.
+   Va de translateX(0) a translateX(-50%) porque el track tiene las
+   imágenes duplicadas (2x), así el loop es perfecto y continuo. */
+@keyframes home-mask-slider-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.home-mask-slider {
+  position: relative;
+  display: flex;
+  min-height: 90vh;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: transparent;
+}
+
+.home-mask-slider__window {
+  position: relative;
+  width: min(90vw, 2050px);
+  height: 50vh;
+  overflow: hidden;
+  background: var(--color-black);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2050 440'%3E%3Ctext x='1025' y='220' text-anchor='middle' dominant-baseline='middle' font-family='sans-serif' font-size='430' font-weight='700' textLength='2050' lengthAdjust='spacingAndGlyphs'%3ERAPIDITO%3C/text%3E%3C/svg%3E");
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+}
+
+.home-mask-slider__track {
+  position: absolute;
+  bottom: -10%;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(0.5rem, 1.5vw, 1rem);
+  height: 80%;
+  width: max-content;
+  animation: home-mask-slider-slide 52s linear infinite;
+  will-change: transform;
+  background: var(--color-black);
+}
+
+.home-mask-slider__slide {
+  position: relative;
+  aspect-ratio: 1;
+  height: 100%;
+  flex: 0 0 auto;
+  overflow: hidden;
+  background: var(--color-black);
+}
+
+.texture-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.home-textured-sections {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.category-card__watermark {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.category-card__watermark-row {
+  position: relative;
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 1.5rem;
+  transform: translateX(0);
+  white-space: nowrap;
+}
+
+.category-card__watermark-word {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-primary) 30%, transparent),
+    color-mix(in srgb, var(--color-text-muted) 30%, transparent)
+  );
+  background-clip: text;
+  color: transparent;
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 7vw, 5.5rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  -webkit-background-clip: text;
+}
+
+.product-marquee {
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  overflow: hidden;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+.product-marquee:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-background);
+}
+.product-marquee:hover svg {
+  transition: transform 0.3s ease;
+  transform: translate3d(4px, -8px, 0) scale3d(1.25, 1.25, 1);
+}
+
+.product-marquee__window {
+  overflow: hidden;
+}
+
+.product-marquee__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.product-marquee__content {
+  display: flex;
+  align-items: center;
+  height: 5rem;
+  gap: 1rem;
+  padding: 0 2.75rem;
+  font-size: clamp(1.4rem, 3vw, 2.75rem);
+  font-weight: 700;
+  white-space: nowrap;
+  text-transform: uppercase;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease;
+}
+
+.product-marquee__mark {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: 0 0 auto;
+  color: inherit;
+  margin-top: 0.6rem;
+}
+
+/* ========================================
    Base Styles
    Tailwind v4 already includes Preflight (CSS reset).
    Only add overrides or extras below.
@@ -118,7 +291,6 @@ body {
   font-size: 16px;
   line-height: 1.6;
   color: var(--color-text);
-  background-color: var(--color-background);
   min-height: 100vh;
 }
 
@@ -126,6 +298,21 @@ body {
 :focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
+}
+
+/* Los campos de texto usan un anillo redondeado en su contenedor
+   (focus-within), así que quitamos el outline cuadrado por defecto
+   que no sigue los bordes redondeados. */
+input[type="text"]:focus-visible,
+input[type="email"]:focus-visible,
+input[type="search"]:focus-visible,
+input[type="tel"]:focus-visible,
+input[type="url"]:focus-visible,
+input[type="password"]:focus-visible,
+input[type="number"]:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
 }
 
 /* prefers-reduced-motion */
@@ -167,4 +354,150 @@ body {
 
 @utility text-balance {
   text-wrap: balance;
+}
+
+/* ========================================
+   Services Bento Section
+   ======================================== */
+
+/* Tarjeta base del bento:
+   - position: relative → para posicionar el número y el glow.
+   - overflow: hidden → recorta el glow, el número y el shine que sobresalen.
+   - border-radius: 1.5rem → esquinas redondeadas.
+   - background: gradiente oscuro (#1a1a1a → #0a0a0a) → superficie de la tarjeta.
+   - border: 1px rgba(255,255,255,0.08) → borde sutil.
+   - transition: transform/border-color/box-shadow → hover suave. */
+.services-bento__card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: linear-gradient(160deg, #1a1a1a 0%, #0a0a0a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+/* Hover: glow rojo + borde rojo.
+   - El levantamiento de la tarjeta (translateY) se hace con GSAP en el
+     componente (evita conflicto con el transform inline de la animación
+     de reveal). */
+.services-bento__card:hover {
+  border-color: color-mix(in srgb, var(--color-primary) 55%, transparent);
+  box-shadow: 0 24px 48px -16px
+    color-mix(in srgb, var(--color-primary) 40%, transparent);
+}
+
+/* Efecto "shine": barrido de luz que cruza la tarjeta al hacer hover.
+   - position: absolute + inset: 0 → cubre toda la tarjeta.
+   - background: gradiente diagonal con un destello blanco sutil.
+   - transform: translateX(-120%) → fuera de la tarjeta (izquierda).
+   - al hover: translateX(120%) → cruza la tarjeta (derecha). */
+.services-bento__card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.07) 50%,
+    transparent 60%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+}
+
+.services-bento__card:hover::after {
+  transform: translateX(120%);
+}
+
+/* Número grande de fondo (Oswald):
+   - position: absolute → se posiciona sobre la tarjeta.
+   - font-family: var(--font-display) → Oswald.
+   - color: rgba(255,255,255,0.06) → muy tenue (watermark).
+   - pointer-events: none → no bloquea interacción. */
+.services-bento__number {
+  position: absolute;
+  top: 0.25rem;
+  right: 1.25rem;
+  z-index: 0;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 8vw, 7rem);
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Glow radial detrás de la imagen:
+   - position: absolute → capa de fondo.
+   - background: radial-gradient con el rojo del tema → resplandor.
+   - opacity: 0.5 → sutil; al hover sube a 1. */
+.services-bento__glow {
+  position: absolute;
+  inset: auto -20% -35% -20%;
+  height: 75%;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--color-primary) 24%, transparent) 0%,
+    transparent 70%
+  );
+  opacity: 0.5;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.services-bento__card:hover .services-bento__glow {
+  opacity: 1;
+}
+
+/* Contenedor de la imagen:
+   - position: relative → para next/image (fill).
+   - flex: 1 → ocupa el espacio disponible.
+   - min-height según el tamaño de la tarjeta. */
+.services-bento__image-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 150px;
+}
+
+.services-bento__card--featured .services-bento__image-wrap {
+  min-height: 240px;
+}
+
+.services-bento__card--wide .services-bento__image-wrap {
+  min-height: 130px;
+}
+
+/* Imagen:
+   - object-fit: contain → la imagen completa sin recortar.
+   - transition: transform → escala suave al hover. */
+.services-bento__image {
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.5s ease;
+}
+
+.services-bento__card:hover .services-bento__image {
+  transform: scale(1.08);
+}
+
+/* Cuerpo de texto */
+.services-bento__body {
+  margin-top: 1.25rem;
+}
+
+/* En la tarjeta ancha (desktop), el texto va al lado de la imagen */
+@media (min-width: 1024px) {
+  .services-bento__card--wide .services-bento__body {
+    margin-top: 0;
+  }
 }

@@ -1,6 +1,5 @@
 import ProductGrid from "@/components/product/ProductGrid";
-import products from "@/app/api/products.json";
-import type { Product } from "@/types/product.types";
+import { getProducts } from "@/lib/products";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ProductsPage() {
-  const typed = products as Product[];
+  const products = getProducts();
   return (
     <>
       {/* Hero interno */}
@@ -29,7 +28,7 @@ export default async function ProductsPage() {
 
       <main className="container-app py-12 md:py-16">
         <h2 className="text-2xl font-semibold mb-8">Todos los Productos</h2>
-        <ProductGrid products={typed} />
+        <ProductGrid products={products} />
       </main>
     </>
   );

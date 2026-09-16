@@ -12,6 +12,7 @@ import {
   decrementQuantity,
   removeItem,
   clearCart,
+  getCartItemKey,
 } from "@/features/cart/cartSlice";
 import { formatPrice } from "@/lib/utils";
 
@@ -85,7 +86,7 @@ export default function CartPage() {
               <div className="flex flex-col gap-6">
                 {items.map((item) => (
                   <div
-                    key={item.id}
+                    key={getCartItemKey(item)}
                     className="flex gap-4 pb-6 border-b border-border last:border-0 last:pb-0"
                   >
                     <Image
@@ -102,9 +103,15 @@ export default function CartPage() {
                           <p className="text-xs text-text-muted mt-1">
                             {formatPrice(item.price)} c/u
                           </p>
+                          {item.sauces && item.sauces.length > 0 && (
+                            <p className="text-xs text-text-muted mt-1">
+                              Aderezos: {item.sauces.join(", ")}
+                            </p>
+                          )}
                         </div>
                         <button
-                          onClick={() => dispatch(removeItem(item.id))}
+                          type="button"
+                          onClick={() => dispatch(removeItem(item))}
                           aria-label={`Eliminar ${item.name}`}
                           className="text-red-500 cursor-pointer hover:text-red-700 transition-colors self-start"
                         >
@@ -114,7 +121,9 @@ export default function CartPage() {
                       <div className="flex items-center justify-between mt-4">
                         <div className="flex items-center gap-2">
                           <button
-                            onClick={() => dispatch(decrementQuantity(item.id))}
+                            type="button"
+                            aria-label={`Disminuir cantidad de ${item.name}`}
+                            onClick={() => dispatch(decrementQuantity(item))}
                             className="w-8 h-8 bg-muted rounded-md cursor-pointer font-medium hover:bg-border transition-colors"
                           >
                             -
@@ -123,7 +132,9 @@ export default function CartPage() {
                             {item.quantity}
                           </span>
                           <button
-                            onClick={() => dispatch(incrementQuantity(item.id))}
+                            type="button"
+                            aria-label={`Aumentar cantidad de ${item.name}`}
+                            onClick={() => dispatch(incrementQuantity(item))}
                             disabled={item.quantity >= item.stock}
                             className="w-8 h-8 bg-muted rounded-md cursor-pointer font-medium hover:bg-border transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
                           >

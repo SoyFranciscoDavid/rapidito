@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import products from "./products.json";
+import { getProducts } from "@/lib/products";
 
 export async function GET() {
-  return NextResponse.json(products);
+  return NextResponse.json(getProducts());
 }

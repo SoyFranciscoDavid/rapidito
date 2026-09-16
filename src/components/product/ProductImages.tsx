@@ -2,9 +2,13 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import type { Product } from "@/types/product.types";
+import type { SerializableProduct } from "@/types/product.types";
 
-export default function ProductImages({ product }: { product: Product }) {
+export default function ProductImages({
+  product,
+}: {
+  product: SerializableProduct;
+}) {
   const [activeIndex, setActiveIndex] = useState(1);
 
   const images = [product.image01, product.image02, product.image03];
@@ -28,6 +32,9 @@ export default function ProductImages({ product }: { product: Product }) {
         {images.map((img, i) => (
           <button
             key={i}
+            type="button"
+            aria-label={`Ver imagen ${i + 1} de ${product.name}`}
+            aria-pressed={activeIndex === i + 1}
             onClick={() => setActiveIndex(i + 1)}
             className={`w-24 h-24 relative cursor-pointer rounded-lg overflow-hidden transition-all duration-300 ${
               activeIndex === i + 1

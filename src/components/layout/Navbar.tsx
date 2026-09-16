@@ -59,10 +59,10 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full z-50 border-b transition-[background-color,border-color,box-shadow] duration-300 ${
         scrolled
-          ? "bg-black/80 backdrop-blur-md border-b border-white/10 shadow-soft"
-          : "bg-transparent"
+          ? "bg-black/80 backdrop-blur-md border-white/10 shadow-soft"
+          : "bg-transparent border-transparent"
       }`}
     >
       {/* Safe-area inset for notched devices */}
@@ -72,7 +72,7 @@ export default function Navbar() {
         }`}
       >
         {/* Logo */}
-        <Logo color={useLightNav ? "contrast" : "primary"} />
+        <Logo size="sm" color={useLightNav ? "contrast" : "primary"} />
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex flex-1 items-center justify-between">
@@ -178,7 +178,7 @@ export default function Navbar() {
                   <circle cx="20" cy="21" r="1" />
                   <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                 </svg>
-                Carrito{" "}
+                Carrito
                 {itemCount > 0 && (
                   <span className="bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
                     {itemCount}

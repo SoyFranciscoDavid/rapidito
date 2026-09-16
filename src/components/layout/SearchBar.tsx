@@ -29,15 +29,21 @@ export default function SearchBar({
 
   return (
     <form
+      role="search"
       onSubmit={handleSubmit}
-      className={`flex items-center gap-2 rounded-xl px-3 h-9 w-full lg:w-72 backdrop-blur-sm ${className} ${
+      className={`flex items-center gap-2 rounded-xl px-3 h-9 w-full lg:w-72 backdrop-blur-sm focus-within:ring-2 ${className} ${
         variant === "light"
-          ? "bg-white/10 text-white placeholder:text-white/60"
-          : "bg-black/5 text-foreground placeholder:text-text-muted"
+          ? "bg-white/10 text-white placeholder:text-white/60 focus-within:ring-white/50"
+          : "bg-black/5 text-foreground placeholder:text-text-muted focus-within:ring-primary/50"
       }`}
     >
+      <label htmlFor="site-search" className="sr-only">
+        Buscar productos
+      </label>
       <input
         ref={inputRef}
+        id="site-search"
+        name="query"
         type="text"
         placeholder="Buscar..."
         className={`flex-1 h-full bg-transparent outline-none text-sm ${
@@ -48,6 +54,7 @@ export default function SearchBar({
       />
       <button
         type="submit"
+        aria-label="Buscar productos"
         className={`text-lg cursor-pointer ${
           variant === "light" ? "text-white" : "text-foreground"
         }`}

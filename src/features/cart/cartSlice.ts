@@ -13,13 +13,22 @@ const initialState: CartState = {
   items: [],
 };
 
+export type CartItemReference = Pick<CartItem, "id" | "sauces">;
+
+export interface PersistedCartItem extends CartItemReference {
+  quantity: number;
+}
+
+export const getCartItemKey = ({ id, sauces }: CartItemReference) =>
+  `${id}:${[...(sauces ?? [])].sort().join(",")}`;
+
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
     addItem: (state, action: PayloadAction<CartItem>) => {
       const existing = state.items.find(
-        (item) => item.id === action.payload.id,
+        (item) => getCartItemKey(item) === getCartItemKey(action.payload),
       );
       if (existing) {
         existing.quantity = Math.min(
@@ -30,17 +39,23 @@ const cartSlice = createSlice({
         state.items.push(action.payload);
       }
     },
-    removeItem: (state, action: PayloadAction<string>) => {
-      state.items = state.items.filter((item) => item.id !== action.payload);
+    removeItem: (state, action: PayloadAction<CartItemReference>) => {
+      state.items = state.items.filter(
+        (item) => getCartItemKey(item) !== getCartItemKey(action.payload),
+      );
     },
-    incrementQuantity: (state, action: PayloadAction<string>) => {
-      const item = state.items.find((item) => item.id === action.payload);
+    incrementQuantity: (state, action: PayloadAction<CartItemReference>) => {
+      const item = state.items.find(
+        (item) => getCartItemKey(item) === getCartItemKey(action.payload),
+      );
       if (item && item.quantity < item.stock) {
         item.quantity += 1;
       }
     },
-    decrementQuantity: (state, action: PayloadAction<string>) => {
-      const item = state.items.find((item) => item.id === action.payload);
+    decrementQuantity: (state, action: PayloadAction<CartItemReference>) => {
+      const item = state.items.find(
+        (item) => getCartItemKey(item) === getCartItemKey(action.payload),
+      );
       if (item && item.quantity > 1) {
         item.quantity -= 1;
       }

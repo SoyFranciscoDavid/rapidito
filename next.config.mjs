@@ -5,15 +5,10 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "images.pexels.com",
-      },
-      {
-        protocol: "https",
         hostname: "images.unsplash.com",
       },
     ],
   },
-
   /**
    * Soluciona el error "Cannot find module './xxx.js'" en Windows.
    *
@@ -27,6 +22,15 @@ const nextConfig = {
     if (dev && config.optimization) {
       config.optimization.moduleIds = "deterministic";
     }
+
+    // Soporte para importar videos (.mp4 / .webm) como assets estáticos.
+    // Next.js no incluye una regla por defecto para estos formatos, así que
+    // se emiten a /_next/static/media/ vía asset/resource.
+    config.module.rules.push({
+      test: /\.(mp4|webm)$/,
+      type: "asset/resource",
+    });
+
     return config;
   },
 };

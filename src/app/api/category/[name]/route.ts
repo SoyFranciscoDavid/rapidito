@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server";
-import products from "../../products.json";
+import { getProductsByCategory } from "@/lib/products";
 
 export async function GET(
   request: Request,
   { params }: { params: { name: string } },
 ) {
-  const category = products.filter(
-    (p) => params.name === p.category.toLowerCase(),
-  );
+  const category = getProductsByCategory(params.name);
 
   return NextResponse.json(category);
 }

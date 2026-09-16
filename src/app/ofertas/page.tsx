@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import products from "@/app/api/products.json";
+import { getProducts } from "@/lib/products";
 import type { Product } from "@/types/product.types";
 import Badge from "@/components/ui/Badge";
 import { formatPrice } from "@/lib/utils";
+import slider1 from "@/assets/images/slider-1.png";
+import slider2 from "@/assets/images/slider-2.png";
+import slider3 from "@/assets/images/slider-3.png";
 
 export const metadata: Metadata = {
   title: "Ofertas | Rapidito",
@@ -17,25 +20,24 @@ const PROMOS = [
     title: "2x1 en Hamburguesas",
     desc: "Todos los martes y jueves. Compra una hamburguesa y llévate la segunda gratis.",
     bg: "from-red-900/80 to-foreground",
-    img: "/assets/slider-1.png",
+    img: slider1,
   },
   {
     title: "Combo Familiar",
     desc: "4 hamburguesas, 4 papas grandes y 4 bebidas por solo $2,500. ¡Ahorra $800!",
     bg: "from-amber-900/80 to-foreground",
-    img: "/assets/slider-2.png",
+    img: slider2,
   },
   {
     title: "Happy Hour",
     desc: "De 17:00 a 19:00 todos los días, 30% de descuento en todas las pizzas.",
     bg: "from-rose-900/80 to-foreground",
-    img: "/assets/slider-3.png",
+    img: slider3,
   },
 ];
 
 export default function OfertasPage() {
-  const typed = products as Product[];
-  const ofertas = typed.filter((p) => p.featured || p.recommended);
+  const ofertas = getProducts().filter((p) => p.featured || p.recommended);
 
   return (
     <>

@@ -1,16 +1,15 @@
 import ProductImages from "@/components/product/ProductImages";
 import AddToCart from "@/components/cart/AddToCart";
-import products from "@/app/api/products.json";
-import type { Product } from "@/types/product.types";
+import { getProductById, toSerializableProduct } from "@/lib/products";
 import { formatPrice } from "@/lib/utils";
+import { getProductDescription } from "@/lib/product-descriptions";
 
 export default async function ProductPage({
   params: { productId },
 }: {
   params: { productId: string };
 }) {
-  const typed = products as Product[];
-  const product = typed.find((p) => p.id === productId) ?? null;
+  const product = getProductById(productId) ?? null;
 
   if (!product) {
     return (
@@ -20,18 +19,20 @@ export default async function ProductPage({
     );
   }
 
+  const serializableProduct = toSerializableProduct(product);
+
   return (
     <div className="container-app pt-24 pb-8">
       <div className="flex justify-between gap-8 max-md:flex-col">
         {/* Images */}
         <div className="w-[48%] max-md:w-full">
-          <ProductImages product={product} />
+          <ProductImages product={serializableProduct} />
         </div>
 
         {/* Details */}
         <div className="w-[48%] max-md:w-full flex flex-col">
           <h1 className="text-4xl font-normal">{product.name}</h1>
-          <p className="mt-4">{product.desc}</p>
+          <p className="mt-4">{getProductDescription(product)}</p>
 
           <div className="line-divider" />
 
@@ -46,17 +47,14 @@ export default async function ProductPage({
 
           <div className="line-divider" />
 
-          <AddToCart product={product} />
+          <AddToCart product={serializableProduct} />
 
           <div className="line-divider" />
 
           <div className="flex flex-col">
             <h4 className="font-medium mb-2">Descripción</h4>
             <p className="text-sm text-text-muted leading-relaxed">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam
-              unde dolore ex nisi deleniti vel laudantium atque, obcaecati,
-              ipsum, magnam labore expedita doloribus inventore rerum suscipit
-              dolorem architecto. Qui, placeat.
+              {getProductDescription(product)}
             </p>
           </div>
         </div>

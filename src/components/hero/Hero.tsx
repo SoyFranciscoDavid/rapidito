@@ -15,33 +15,20 @@ export default function Hero() {
     const video = videoRef.current;
     if (!video) return;
 
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
 
-    const updatePlayback = () => {
-      if (mq.matches) {
-        video.pause();
-        setIsPlaying(false);
-        return;
-      }
-
-      video
-        .play()
-        .then(() => setIsPlaying(true))
-        .catch((error: unknown) => {
-          setIsPlaying(false);
-          console.error("No se pudo iniciar el video del hero:", error);
-        });
-    };
-
     video.addEventListener("play", handlePlay);
     video.addEventListener("pause", handlePause);
-    updatePlayback();
-    mq.addEventListener("change", updatePlayback);
+    video
+      .play()
+      .then(() => setIsPlaying(true))
+      .catch((error: unknown) => {
+        setIsPlaying(false);
+        console.error("No se pudo iniciar el video del hero:", error);
+      });
 
     return () => {
-      mq.removeEventListener("change", updatePlayback);
       video.removeEventListener("play", handlePlay);
       video.removeEventListener("pause", handlePause);
     };

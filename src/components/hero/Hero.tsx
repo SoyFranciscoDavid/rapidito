@@ -4,19 +4,20 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import videoWebm from "@/assets/videos/video.webm";
 import videoMp4 from "@/assets/videos/video.mp4";
-import poster from "@/assets/images/slider-1.png";
 import Button from "@/components/ui/Button";
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
 
     const updatePlayback = () => {
       if (mq.matches) {
@@ -25,35 +26,39 @@ export default function Hero() {
         return;
       }
 
-      if (isPlaying) {
-        video.play().catch(() => {});
-        return;
-      }
-
-      video.pause();
+      video
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch((error: unknown) => {
+          setIsPlaying(false);
+          console.error("No se pudo iniciar el video del hero:", error);
+        });
     };
 
+    video.addEventListener("play", handlePlay);
+    video.addEventListener("pause", handlePause);
     updatePlayback();
     mq.addEventListener("change", updatePlayback);
 
     return () => {
       mq.removeEventListener("change", updatePlayback);
+      video.removeEventListener("play", handlePlay);
+      video.removeEventListener("pause", handlePause);
     };
-  }, [isPlaying]);
+  }, []);
 
   const togglePlayback = () => {
     const video = videoRef.current;
     if (!video) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setIsPlaying(false);
-      video.pause();
-      return;
-    }
-
     if (video.paused) {
-      video.play().catch(() => {});
-      setIsPlaying(true);
+      video
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch((error: unknown) => {
+          setIsPlaying(false);
+          console.error("No se pudo iniciar el video del hero:", error);
+        });
       return;
     }
 
@@ -66,11 +71,11 @@ export default function Hero() {
       <video
         ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover"
+        autoPlay
         muted
         loop
         playsInline
         preload="auto"
-        poster={poster.src}
         aria-hidden="true"
         tabIndex={-1}
       >

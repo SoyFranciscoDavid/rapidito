@@ -36,6 +36,7 @@ export default function Navbar() {
   const hasDarkHero =
     DARK_HERO_ROUTES.includes(pathname) || pathname.startsWith("/category/");
   const useLightNav = hasDarkHero && !scrolled;
+  const isHomeHero = pathname === "/" && !scrolled;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 100);
@@ -62,7 +63,9 @@ export default function Navbar() {
       className={`fixed top-0 left-0 w-full z-50 border-b transition-[background-color,border-color,box-shadow] duration-300 ${
         scrolled
           ? "bg-black/80 backdrop-blur-md border-white/10 shadow-soft"
-          : "bg-transparent border-transparent"
+          : isHomeHero
+            ? "bg-black/35 backdrop-blur-sm border-white/10"
+            : "bg-transparent border-transparent"
       }`}
     >
       {/* Safe-area inset for notched devices */}
